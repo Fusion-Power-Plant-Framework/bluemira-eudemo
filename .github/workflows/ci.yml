@@ -1,4 +1,4 @@
-name: bluemira_bluemira-eudemo
+name: bluemira-eudemo
 
 on:
   schedule:
@@ -47,7 +47,7 @@ jobs:
       - name: Run pytest
         shell: bash -l {0}
         env:
-          PACKAGE: bluemira-eudemo
+          PACKAGE: eudemo
         run: |
           pytest --cov=${PACKAGE} \
                  --cov-report html:htmlcov \

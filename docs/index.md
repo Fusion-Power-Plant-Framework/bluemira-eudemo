@@ -1,6 +1,6 @@
 # Introduction
 
-The `bluemira-eudemo` package. This project contains the EU-DEMO reactor design.
+The `eudemo` package. This project contains the EU-DEMO reactor design.
 
 ## Examples
 

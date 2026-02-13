@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from bluemira-eudemo.reactor import main
+from eudemo.reactor import main
 
 build_config_path = Path(Path(__file__).parent, "config/config.json").resolve()
 reactor = main(build_config_path)

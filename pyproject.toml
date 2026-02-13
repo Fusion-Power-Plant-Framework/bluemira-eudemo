@@ -3,7 +3,7 @@ requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project]
-name = "bluemira-eudemo"
+name = "eudemo"
 dynamic = ["version"]
 description = 'This project contains the EU-DEMO reactor design.'
 readme = "README.md"
@@ -47,7 +47,7 @@ Source = "https://github.com/Fusion-power-plant-framework/bluemira-eudemo"
 [tool.hatch.version]
 source = "vcs"
 [tool.hatch.build.hooks.vcs]
-version-file = "bluemira-eudemo/_version.py"
+version-file = "eudemo/_version.py"
 
 # env: default
 [tool.hatch.envs.default]
@@ -66,7 +66,7 @@ deploy = "mkdocs gh-deploy"
 detached     = true                           # Don't inherit from default (does not download project dependencies)
 dependencies = ["ruff", "mypy", "pre-commit"]
 [tool.hatch.envs.lint.scripts]
-typing = "mypy --install-types --non-interactive {args:bluemira-eudemo tests}"
+typing = "mypy --install-types --non-interactive {args:eudemo tests}"
 style  = ["ruff {args:check .}"]
 fmt    = ["pre-commit run --all-files --hook-stage manual"]
 all    = ["style", "typing"]
@@ -78,8 +78,8 @@ features = ["test"]
 python = ["3.10", "3.11", "3.12"]
 [tool.hatch.envs.test.scripts]
 tests      = "pytest {args:tests}"
-tests-cov  = "pytest --cov bluemira-eudemo  --cov-report html:htmlcov_bluemira-eudemo --cov-report xml {args:tests}"
-tests-cov-private  = "pytest --private --cov bluemira-eudemo --cov-report html:htmlcov --cov-report xml {args:tests}"
+tests-cov  = "pytest --cov eudemo  --cov-report html:htmlcov_eudemo --cov-report xml {args:tests}"
+tests-cov-private  = "pytest --private --cov eudemo --cov-report html:htmlcov --cov-report xml {args:tests}"
 
 # tool: ruff
 [tool.ruff]
@@ -98,29 +98,45 @@ exclude = [
 ]
 select = ["ALL"]
 ignore = [
-  "ANN101", # Allow no type annotation for self in method
-  "ANN102", # Allow no type annotation for cls in classmethod
-  "ANN204", # Allow no type annotation for __init__ return
-  "D205", # Allow no blank lines after docstring
-  "B027", # Allow non-abstract empty methods in abstract base classes
-  "S105", # Ignore checks for possible passwords
-  "S106",
-  "S107",
-  "C901", # Ignore complexity
-  "PLR0911",
-  "PLR0912",
-  "PLR0913",
-  "PLR0915",
-  "COM812",
-  "ISC001",
-  "D107",
+    "D",       # Temporarily ignore
+    "N",
+    "PLR",
+    "TD",
+    "DOC",
+    "ARG",
+    "SLF",
+    "ANN",     # type annotations
+    "EM",      # string in error messages
+    "PD",      # Pandas
+    "B019",    # using cache memory leaks
+    "COM812",  # enforce trailing comma, disagrees with black/ruff format
+    "D107",
+    "D200",    # docs stuff
+    "D203",
+    "D205",
+    "D301",
+    "D400",
+    "D401",
+    "DOC502",  # Omit non-explicit exceptions from docstrings
+    "DTZ005",  # datetime timezone arg
+    "E203",    # black/ruff format conflicts
+    "FIX002",  # Line contains todo
+    "ISC001",  # ruff format conflict
+    "PLW1514", # Specify file open encoding
+    "PTH123",  # use Path.open
+    "TRY003",  # put error messages in error class
+    "FURB152",  # 3.14 != pi
+    "PIE790",  # TMP for false positive ...
+    "ERA",  # remove commented out code
+    "T201",
+    "DOC201",
 ]
 unfixable = [
   "F401", # Don't touch unused imports
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["bluemira-eudemo"]
+known-first-party = ["eudemo"]
 
 [tool.ruff.lint.flake8-tidy-imports]
 ban-relative-imports = "all"
@@ -133,7 +149,7 @@ convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
 # Tests can use magic values, assertions, and relative imports
-"tests/**/*" = ["PLR2004", "S101", "TID252"]
+"tests/**" = ["PLR2004", "S101", "TID252", "D", "N", "PLR", "INP001", "PLC2701"]
 "__init__.py" = ["F401", "F403"]
 "studies/**/*" = ["INP001", "CPY001"]
 
@@ -141,15 +157,18 @@ convention = "google"
 notice-rgx = "(?i)# SPDX-FileCopyrightText:\\s\\d{4}(-(\\d{4}|present))*"
 
 [tool.coverage.run]
-source_pkgs = ["bluemira-eudemo", "tests"]
+source_pkgs = ["eudemo", "tests"]
 branch = true
 parallel = true
-omit = ["bluemira-eudemo/_version.py"]
+omit = ["eudemo/_version.py"]
 
 [tool.coverage.paths]
-base = ["bluemira-eudemo", "*/bluemira-eudemo"]
-tests = ["tests", "*/bluemira-eudemo/tests"]
+base = ["eudemo", "*/eudemo"]
+tests = ["tests", "*/eudemo/tests"]
 
 [tool.coverage.report]
 "exclude_also" = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
-omit = ["bluemira-eudemo/_version.py"]
+omit = ["eudemo/_version.py"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
