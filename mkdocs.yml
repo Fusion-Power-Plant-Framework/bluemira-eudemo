@@ -4,7 +4,7 @@ site_description: This project contains the EU-DEMO reactor design.
 repo_name: Fusion-power-plant-framework/bluemira-eudemo
 # repo_url: <set:repo-url>
 watch:
-  - bluemira-eudemo
+  - eudemo
 
 plugins:
   - search

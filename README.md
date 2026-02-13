@@ -1,50 +1,29 @@
-# Bluemira template-project
+# EU-DEMO Reactor Design
 
----
+__Work in progress: this model is not yet fully functional__
 
-## Setting up and using this template
-
-Start by git cloning this repository (or use the "Use this template" button on GitHub).
-
-```bash
-git clone git@github.com:Fusion-Power-Plant-Framework/bluemira-template-project.git my_bm_project
-cd my_bm_project
-```
-We use the [cookiecutter](https://github.com/cookiecutter/cookiecutter) project to setup a new bluemira project.
-
-With your local copy of the repository run the following script and fill in the prompts with the details. You will need pip available to install cookiecutter.
+This repo contains the EU-DEMO reactor design.
+To use the `eudemo` package, you must add its path to your Python path:
 
 ```bash
-bash scripts/setup_repo.sh
+export PYTHONPATH="<path/to/bluemira>/eudemo:${PYTHONPATH}"
 ```
 
-You can then add and commit the resulting changes.
-
-Finally to set up your bluemira environment run the following, until bluemira >v2.4.0 you will need to use the develop branch to use this template:
+To run the reactor build,
+`cd` into the `eudemo` directory and run the `reactor.py` file:
 
 ```bash
-bash scripts/install_bluemira.sh -i -t develop
+cd <path/to/bluemira>/eudemo
+python eudemo/reactor.py
 ```
 
-If you have already have a conda installation you can remove `-i` and the conda step will be skipped. Once the environment is setup please activate your environment replacing `{your_project_name}` with the appropriate value:
+The `cd` is required, as the paths in the build config are
+relative to the `eudemo` directory.
 
-```bash
-source ~/.miniforge-init.sh
-conda activate bluemira-{your_project_name}
-```
+In future this will be moved to a separate repository.
+It should be used as a template for how we expect
+other reactor repositories to be structured.
 
-Any suggested improvements to the setup experience is welcomed, please open an issue or even better a PR!
+## Neutronics
 
-## Running reactor designs
-
-The example study can be run as shown once the setup has been completed:
-
-```
-python studies/first/run.py
-```
-
-## Running tests
-
-A test directory is setup (currently empty) once test have been created they can be run with `pytest`.
-
-Once set up this repo creates a github action to run the tests against the current bluemira develop branch which runs on a cron job schedule. By default this runs twice a day.
+To use the axis-symmetric neutronics run you will need to download the required neutronics cross section data into the folder `eudemo/config/cross_section_data` or modify the build_config.json accordingly. Secondly you will need to provide a source, the default used in the `make_pps_source` function is not currently open source but should be available shortly.

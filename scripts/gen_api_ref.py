@@ -12,10 +12,10 @@ from mkdocs_gen_files.nav import Nav
 nav = Nav()
 
 root = Path(__file__).parent.parent
-src = root / "bluemira-eudemo"
+src = root / "eudemo"
 
 # With the navigation.sections feature enabled, this isn't necessary.
-# nav["Overview",] = "overview.md"  # noqa: ERA001
+# nav["Overview",] = "overview.md"
 
 for path in sorted(src.rglob("*.py")):
     module_path = path.relative_to(root).with_suffix("")

@@ -58,16 +58,16 @@ echo Installing...
 echo
 
 if [ "$INSTALL_CONDA" = true ] ; then
-    set -- -e bluemira-bluemira-eudemo -p $PYTHON_VERSION
+    set -- -e bluemira-eudemo -p $PYTHON_VERSION
     OPTIND=1
     source scripts/install-conda.sh
     source ~/.miniforge-init.sh ""
 else
     source ~/.miniforge-init.sh ""
-    conda env create -f conda/environment.yml -n bluemira-bluemira-eudemo
+    conda env create -f conda/environment.yml -n bluemira-eudemo
 fi
 
-conda activate bluemira-bluemira-eudemo
+conda activate bluemira-eudemo
 
 pip install -e . --config-settings editable_mode=compat
 pre-commit install -f

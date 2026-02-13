@@ -344,3 +344,5 @@ report.html
 .hatch
 */_version.py
 bluemira
+.vscode/
+_version.py

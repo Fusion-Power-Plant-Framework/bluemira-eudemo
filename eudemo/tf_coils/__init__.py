@@ -3,3 +3,6 @@
 # SPDX-FileCopyrightText: 2021-present J. Morris, D. Short
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
+"""Module containing builders for the EUDEMO TF coil components"""
+
+from eudemo.tf_coils.tf_coils import TFCoil, TFCoilBuilder, TFCoilDesigner
