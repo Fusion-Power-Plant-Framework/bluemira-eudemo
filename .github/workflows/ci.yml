@@ -25,6 +25,14 @@ jobs:
       - name: Run Hatch linting tasks
         uses: Fusion-Power-Plant-Framework/fppf-actions/hatch-lint@main
 
+      - name: Show ruff modifications
+        if: failure()
+        run: |
+          echo "Changed files:"
+          git status
+          echo "Diff:"
+          git diff
+
   test:
     runs-on: ubuntu-latest
     steps:
