@@ -28,7 +28,7 @@ jobs:
       - name: Show ruff modifications
         if: failure()
         run: |
-          ruff --version
+          hatch run ruff --version
           echo "Changed files:"
           git status
           echo "Diff:"
