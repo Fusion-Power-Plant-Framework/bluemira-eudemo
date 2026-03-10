@@ -13,15 +13,15 @@ from typing import TYPE_CHECKING
 
 import matplotlib.pyplot as plt
 import numpy as np
-from PIL import Image
-from tabulate import tabulate
-
 from bluemira.base.constants import raw_uc
 from bluemira.base.look_and_feel import bluemira_warn
+from PIL import Image
+from tabulate import tabulate
 
 if TYPE_CHECKING:
     from bluemira.base.parameter_frame._frame import ParameterFrame
     from bluemira.equilibria.run import Snapshot
+
     from eudemo.eudemo.neutronics.run import CSGOutput, DAGMCOutput
 
 

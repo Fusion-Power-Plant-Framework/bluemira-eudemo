@@ -13,8 +13,6 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
-from eqdsk import EQDSKInterface
-
 from bluemira.base.designer import Designer
 from bluemira.base.file import get_bluemira_path, get_bluemira_root
 from bluemira.base.look_and_feel import bluemira_warn
@@ -44,6 +42,8 @@ from bluemira.geometry.parameterisations import GeometryParameterisation, Prince
 from bluemira.geometry.tools import make_circle, make_polygon, offset_wire
 from bluemira.geometry.wire import BluemiraWire
 from bluemira.utilities.tools import get_class_from_module
+from eqdsk import EQDSKInterface
+
 from eudemo.equilibria._equilibrium import (
     EquilibriumParams,
     ReferenceEquilibriumParams,

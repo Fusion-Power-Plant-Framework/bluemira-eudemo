@@ -10,11 +10,11 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-
 from bluemira.base.error import DesignError
 from bluemira.base.file import get_bluemira_path
 from bluemira.equilibria import Equilibrium
 from bluemira.equilibria.find import find_OX_points
+
 from eudemo.ivc import WallSilhouetteDesigner
 
 EQDATA = get_bluemira_path("equilibria/test_data", subfolder="tests")

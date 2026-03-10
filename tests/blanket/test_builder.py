@@ -6,6 +6,7 @@
 from bluemira.geometry.coordinates import Coordinates
 from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.tools import make_polygon
+
 from eudemo.blanket.builder import BlanketBuilder
 
 

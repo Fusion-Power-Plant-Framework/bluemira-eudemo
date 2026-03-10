@@ -5,9 +5,9 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
 
 import pytest
-
 from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.tools import boolean_fuse, extrude_shape, make_circle
+
 from eudemo.maintenance.duct_connection import pipe_pipe_join
 
 

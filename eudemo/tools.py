@@ -9,7 +9,6 @@
 import operator
 
 import numpy as np
-
 from bluemira.base.components import PhysicalComponent
 from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.plane import BluemiraPlane

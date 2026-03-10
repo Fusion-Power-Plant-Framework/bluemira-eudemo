@@ -4,6 +4,7 @@
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 from bluemira.geometry.parameterisations import PictureFrame
+
 from eudemo.vacuum_vessel import VacuumVesselBuilder
 
 

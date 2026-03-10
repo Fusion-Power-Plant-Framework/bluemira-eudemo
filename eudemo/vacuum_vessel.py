@@ -29,6 +29,7 @@ from bluemira.geometry.tools import (
     force_wire_to_spline,
 )
 from bluemira.materials.basic import Void
+
 from eudemo.comp_managers import PortManagerMixin
 from eudemo.maintenance.duct_connection import pipe_pipe_join
 

@@ -7,7 +7,6 @@
 
 import numpy as np
 import numpy.typing as npt
-
 from bluemira.base.constants import EPS
 from bluemira.base.error import BuilderError
 from bluemira.base.look_and_feel import bluemira_warn

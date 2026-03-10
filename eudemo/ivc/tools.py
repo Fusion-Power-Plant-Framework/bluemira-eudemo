@@ -6,7 +6,6 @@
 """IVC tools"""
 
 import numpy as np
-
 from bluemira.geometry.tools import boolean_cut, make_polygon
 from bluemira.geometry.wire import BluemiraWire
 

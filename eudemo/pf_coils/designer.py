@@ -15,8 +15,6 @@ from typing import TYPE_CHECKING
 
 import matplotlib.pyplot as plt
 import numpy as np
-from eqdsk import EQDSKInterface
-
 from bluemira.base.designer import Designer
 from bluemira.base.look_and_feel import bluemira_print
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
@@ -40,6 +38,8 @@ from bluemira.equilibria.run import (
 )
 from bluemira.equilibria.shapes import JohnerLCFS
 from bluemira.utilities.tools import get_class_from_module, json_writer
+from eqdsk import EQDSKInterface
+
 from eudemo.equilibria.tools import make_grid
 from eudemo.pf_coils.tools import make_coil_mapper, make_coilset, make_pf_coil_path
 
@@ -48,6 +48,7 @@ if TYPE_CHECKING:
 
     from bluemira.geometry.face import BluemiraFace
     from bluemira.geometry.wire import BluemiraWire
+
     from eudemo.model_managers import EquilibriumManager
 
 

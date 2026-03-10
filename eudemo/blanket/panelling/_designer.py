@@ -9,12 +9,12 @@ from dataclasses import dataclass
 from typing import Any, ClassVar
 
 import numpy as np
-
 from bluemira.base.designer import Designer
 from bluemira.base.look_and_feel import bluemira_warn
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
 from bluemira.geometry.wire import BluemiraWire
 from bluemira.optimisation.error import OptimisationError
+
 from eudemo.blanket.panelling._opt_problem import PanellingOptProblem
 from eudemo.blanket.panelling._paneller import Paneller
 
