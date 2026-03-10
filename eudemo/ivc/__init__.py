@@ -13,6 +13,7 @@ from typing import TYPE_CHECKING
 from bluemira.base.designer import run_designer
 from bluemira.equilibria import find_OX_points
 from bluemira.geometry.tools import boolean_cut
+
 from eudemo.ivc.divertor_silhouette import DivertorSilhouetteDesigner
 from eudemo.ivc.ivc_boundary import IVCBoundaryDesigner
 from eudemo.ivc.plasma_face import PlasmaFaceDesigner

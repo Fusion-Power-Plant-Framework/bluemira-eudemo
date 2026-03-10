@@ -10,6 +10,7 @@ from bluemira.equilibria import Equilibrium
 from bluemira.equilibria.find import OPointCalcOptions
 from bluemira.equilibria.profiles import BetaIpProfile, Profile
 from bluemira.geometry.wire import BluemiraWire
+
 from eudemo.equilibria.tools import make_grid
 from eudemo.pf_coils.tools import make_coilset, make_reference_coilset
 

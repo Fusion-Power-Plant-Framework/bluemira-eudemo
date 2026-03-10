@@ -6,12 +6,12 @@
 
 import numpy as np
 import pytest
-
 from bluemira.base.error import BuilderError
 from bluemira.equilibria.coils import Coil
 from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.parameterisations import PictureFrame, PrincetonD, TripleArc
 from bluemira.geometry.tools import boolean_cut, make_polygon
+
 from eudemo.pf_coils.tools import (
     make_coil_mapper,
     make_coilset,

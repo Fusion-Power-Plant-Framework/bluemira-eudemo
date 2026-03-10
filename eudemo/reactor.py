@@ -26,8 +26,6 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
-from matproplib.conditions import OperationalConditions
-
 from bluemira.base.components import Component
 from bluemira.base.designer import run_designer
 from bluemira.base.file import get_bluemira_path, make_bluemira_path
@@ -61,6 +59,8 @@ from bluemira.radiation_transport.neutronics.zero_d_neutronics import (
     ZeroDNeutronicsModel,
 )
 from bluemira.utilities.tools import json_writer
+from matproplib.conditions import OperationalConditions
+
 from eudemo.blanket import Blanket, BlanketBuilder, BlanketDesigner
 from eudemo.coil_structure import build_coil_structures_component
 from eudemo.comp_managers import (

@@ -9,8 +9,6 @@ from dataclasses import dataclass
 from typing import TypeVar
 
 import numpy as np
-from scipy.spatial.distance import euclidean
-
 from bluemira.base.designer import Designer
 from bluemira.base.error import BuilderError
 from bluemira.base.look_and_feel import bluemira_warn
@@ -20,6 +18,8 @@ from bluemira.geometry.coordinates import Coordinates
 from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.tools import boolean_cut, make_polygon
 from bluemira.geometry.wire import BluemiraWire
+from scipy.spatial.distance import euclidean
+
 from eudemo.blanket.panelling import PanellingDesigner
 from eudemo.tools import get_inner_cut_point
 

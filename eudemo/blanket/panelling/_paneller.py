@@ -5,13 +5,12 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
 
 import numpy as np
-from scipy.interpolate import InterpolatedUnivariateSpline
-
 from bluemira.geometry.coordinates import (
     Coordinates,
     vector_intersect,
     vector_lengthnorm,
 )
+from scipy.interpolate import InterpolatedUnivariateSpline
 
 
 class Paneller:

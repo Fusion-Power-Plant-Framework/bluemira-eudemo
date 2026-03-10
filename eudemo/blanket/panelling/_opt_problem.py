@@ -6,8 +6,8 @@
 """Definition of panelling optimisation problem for EUDEMO."""
 
 import numpy as np
-
 from bluemira.optimisation import ConstraintT, OptimisationProblem
+
 from eudemo.blanket.panelling._paneller import Paneller
 
 
