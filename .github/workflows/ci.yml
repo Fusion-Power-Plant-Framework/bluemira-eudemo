@@ -20,15 +20,14 @@ jobs:
           fetch-depth: 0
 
       - name: Setup python and hatch
-        uses: Fusion-Power-Plant-Framework/fppf-actions/setup-hatch@main
+        uses: Hudsonbaker4/fppf-actions/setup-hatch@build-action
 
       - name: Run Hatch linting tasks
-        uses: Fusion-Power-Plant-Framework/fppf-actions/hatch-lint@main
+        uses: Hudsonbaker4/fppf-actions/hatch-lint@build-action
 
       - name: Show ruff modifications
         if: failure()
         run: |
-          hatch run ruff --version
           echo "Changed files:"
           git status
           echo "Diff:"
