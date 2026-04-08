@@ -25,14 +25,6 @@ jobs:
       - name: Run Hatch linting tasks
         uses: Hudsonbaker4/fppf-actions/hatch-lint@build-action
 
-      - name: Show ruff modifications
-        if: failure()
-        run: |
-          echo "Changed files:"
-          git status
-          echo "Diff:"
-          git diff
-
   test:
     runs-on: ubuntu-latest
     steps:
