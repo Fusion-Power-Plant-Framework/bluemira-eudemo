@@ -38,7 +38,7 @@ jobs:
       - name: Build bluemira
         uses: Fusion-Power-Plant-Framework/fppf-actions/build-action@main
         with:
-          os: ubuntu-latest
+          python-version: "3.11"
 
       - name: Run pytest
         shell: bash -l {0}
