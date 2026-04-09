@@ -31,15 +31,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Checkout bluemira
-        uses: actions/checkout@v4
-        with:
-          repository: "Fusion-Power-Plant-Framework/bluemira"
-
       - name: Build bluemira
         uses: Hudsonbaker4/fppf-actions/build-action@build-action
         with:
-          os: ubuntu-latest
+          python-version: "3.11"
+          clone-bluemira: "true"
 
       - name: Run pytest
         shell: bash -l {0}
