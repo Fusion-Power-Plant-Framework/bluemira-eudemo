@@ -16,7 +16,6 @@ from dataclasses import dataclass
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
-
 from bluemira.base.builder import Builder
 from bluemira.base.components import Component, PhysicalComponent
 from bluemira.base.constants import EPS

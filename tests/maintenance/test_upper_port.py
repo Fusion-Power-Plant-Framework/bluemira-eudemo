@@ -10,7 +10,6 @@ Tests for EU-DEMO Maintenance
 
 import numpy as np
 import pytest
-
 from bluemira.base.error import BuilderError
 from bluemira.base.parameter_frame import Parameter
 from bluemira.display.displayer import show_cad
@@ -24,6 +23,7 @@ from bluemira.geometry.tools import (
 )
 from bluemira.geometry.wire import BluemiraWire
 from bluemira.utilities.tools import cross_2d
+
 from eudemo.maintenance.duct_connection import (
     VVUpperPortDuctBuilder,
     VVUpperPortDuctBuilderParams,

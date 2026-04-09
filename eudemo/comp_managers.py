@@ -23,6 +23,7 @@ from bluemira.builders.tools import apply_component_display_options
 from bluemira.display.palettes import BLUE_PALETTE
 from bluemira.geometry.tools import boolean_cut, boolean_fuse
 from bluemira.materials.basic import vacuum_void
+
 from eudemo.maintenance.duct_connection import join_ports
 from eudemo.tools import make_2d_view_components
 

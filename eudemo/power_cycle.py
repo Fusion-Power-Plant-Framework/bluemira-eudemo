@@ -15,7 +15,6 @@ from dataclasses import dataclass
 from enum import Enum, auto
 
 import numpy as np
-
 from bluemira.balance_of_plant.steady_state import (
     BalanceOfPlantModel,
     BoPModelParams,

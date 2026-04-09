@@ -10,7 +10,6 @@ Plasma Face Designer
 from dataclasses import dataclass
 
 import numpy as np
-
 from bluemira.base.designer import Designer
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
 from bluemira.geometry.face import BluemiraFace

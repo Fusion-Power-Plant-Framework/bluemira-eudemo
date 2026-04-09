@@ -29,6 +29,7 @@ from eudemo.maintenance.duct_connection import (
     make_equatorial_port_yz_face,
     pipe_pipe_join,
 )
+
 from eudemo.vacuum_vessel import VacuumVesselBuilder
 
 

@@ -18,7 +18,6 @@ if TYPE_CHECKING:
     from bluemira.geometry.wire import BluemiraWire
 
 import numpy as np
-
 from bluemira.base.builder import Builder
 from bluemira.base.components import Component, PhysicalComponent
 from bluemira.base.error import BuilderError

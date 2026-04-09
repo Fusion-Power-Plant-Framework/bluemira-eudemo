@@ -12,7 +12,6 @@ import operator
 from dataclasses import dataclass
 
 import numpy as np
-
 from bluemira.base.constants import EPS
 from bluemira.base.designer import Designer
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
@@ -20,6 +19,7 @@ from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.plane import BluemiraPlane
 from bluemira.geometry.tools import make_polygon, slice_shape
 from bluemira.optimisation import ConstraintT, OptimisationProblem
+
 from eudemo.tools import get_inner_cut_point
 
 

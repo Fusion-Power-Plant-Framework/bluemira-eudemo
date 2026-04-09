@@ -11,8 +11,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from matproplib.library.fluids import Void
-
 from bluemira.base.look_and_feel import bluemira_print
 from bluemira.codes.openmc.output import OpenMCCSGResult, OpenMCDAGMCResult
 from bluemira.codes.openmc.solver import OpenMCDAGMCNeutronicsSolver
@@ -27,6 +25,7 @@ from bluemira.radiation_transport.neutronics.geometry import TokamakDimensions
 from bluemira.radiation_transport.neutronics.neutronics_axisymmetric import (
     NeutronicsReactor,
 )
+
 from eudemo.materials import (
     BE12TI_MAT,
     CONCRETE_MAT,
@@ -39,14 +38,14 @@ from eudemo.materials import (
 
 if TYPE_CHECKING:
     import numpy.typing as npt
-    from matplotlib.axes import Axes
-    from matproplib.conditions import OperationalConditions
-
     from bluemira.base.parameter_frame import ParameterFrame
     from bluemira.base.reactor import ComponentManager
     from bluemira.codes.openmc.solver import NeutronSourceCreator
     from bluemira.equilibria.equilibrium import Equilibrium
     from bluemira.geometry.wire import BluemiraWire
+    from matplotlib.axes import Axes
+    from matproplib.conditions import OperationalConditions
+
     from eudemo.blanket import Blanket
     from eudemo.ivc import IVCShapes
     from eudemo.vacuum_vessel import VacuumVessel

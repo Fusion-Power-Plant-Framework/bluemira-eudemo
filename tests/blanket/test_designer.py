@@ -7,9 +7,9 @@ from unittest import mock
 
 import numpy as np
 import pytest
-
 from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.tools import make_polygon
+
 from eudemo.blanket import BlanketDesigner
 from eudemo_tests.blanket.tools import make_simple_blanket
 

@@ -4,11 +4,11 @@
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 import numpy as np
-
 from bluemira.geometry.coordinates import Coordinates
 from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.tools import make_circle, make_polygon
 from bluemira.geometry.wire import BluemiraWire
+
 from eudemo.blanket.designer import BlanketSegments
 
 

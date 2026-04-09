@@ -8,9 +8,9 @@ import json
 from pathlib import Path
 
 import pytest
-
 from bluemira.base.file import get_bluemira_path
 from bluemira.equilibria import Equilibrium
+
 from eudemo.equilibria import EquilibriumDesigner
 from eudemo.equilibria._designer import EquilibriumDesignerParams
 

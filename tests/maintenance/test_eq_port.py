@@ -10,9 +10,9 @@ Tests for EU-DEMO Maintenance
 
 import numpy as np
 import pytest
-
 from bluemira.geometry.tools import make_polygon
 from bluemira.geometry.wire import BluemiraWire
+
 from eudemo.maintenance.equatorial_port import (
     EquatorialPortDuctBuilder,
     EquatorialPortKOZDesigner,

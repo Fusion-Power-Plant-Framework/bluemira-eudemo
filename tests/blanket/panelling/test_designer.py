@@ -9,7 +9,6 @@ from unittest import mock
 import matplotlib.pyplot as plt
 import numpy as np
 import pytest
-
 from bluemira.display import plot_2d
 from bluemira.equilibria.shapes import JohnerLCFS
 from bluemira.geometry.plane import BluemiraPlane
@@ -22,6 +21,7 @@ from bluemira.geometry.tools import (
     split_wire,
 )
 from bluemira.geometry.wire import BluemiraWire
+
 from eudemo.blanket.panelling import PanellingDesigner
 from eudemo.ivc.wall_silhouette_parameterisation import WallPolySpline
 

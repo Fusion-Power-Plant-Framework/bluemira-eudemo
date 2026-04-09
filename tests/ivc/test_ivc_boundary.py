@@ -10,10 +10,10 @@ Test ivc boundary designer.
 from typing import ClassVar
 
 import pytest
-
 from bluemira.base.error import DesignError
 from bluemira.geometry.parameterisations import PictureFrame
 from bluemira.geometry.tools import make_circle, signed_distance
+
 from eudemo.ivc import IVCBoundaryDesigner
 
 

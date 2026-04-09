@@ -10,8 +10,8 @@ Test PlasmaFaceDesigner
 from typing import ClassVar
 
 import pytest
-
 from bluemira.geometry.tools import make_polygon
+
 from eudemo.ivc import PlasmaFaceDesigner
 
 

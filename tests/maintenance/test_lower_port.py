@@ -10,7 +10,6 @@ Tests for EU-DEMO Lower Port
 
 import numpy as np
 import pytest
-
 from bluemira.base.parameter_frame import make_parameter_frame
 from bluemira.geometry.error import GeometryError
 from bluemira.geometry.face import BluemiraFace
@@ -26,6 +25,7 @@ from bluemira.geometry.tools import (
     sweep_shape,
 )
 from bluemira.geometry.wire import BluemiraWire
+
 from eudemo.maintenance.lower_port.builder import TSLowerPortDuctBuilder
 from eudemo.maintenance.lower_port.duct_designer import (
     LowerPortKOZDesigner,

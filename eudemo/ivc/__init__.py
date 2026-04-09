@@ -15,6 +15,7 @@ from typing import TYPE_CHECKING
 from bluemira.base.designer import run_designer
 from bluemira.builders.tools import clip_wall_silhouette_at_xpoint, cut_wire_at_z_value
 from bluemira.geometry.tools import CutLocation, boolean_cut
+
 from eudemo.ivc.divertor_silhouette import DivertorSilhouetteDesigner
 from eudemo.ivc.ivc_boundary import IVCBoundaryDesigner
 from eudemo.ivc.plasma_face import PlasmaFaceDesigner

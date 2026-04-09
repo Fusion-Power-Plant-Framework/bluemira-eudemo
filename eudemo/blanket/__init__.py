@@ -11,6 +11,7 @@ from bluemira.base.tools import CADConstructionType
 from bluemira.geometry.coordinates import Coordinates
 from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.wire import BluemiraWire
+
 from eudemo.blanket.builder import BlanketBuilder
 from eudemo.blanket.designer import BlanketDesigner
 

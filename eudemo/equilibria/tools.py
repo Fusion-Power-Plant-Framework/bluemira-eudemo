@@ -16,7 +16,6 @@ if TYPE_CHECKING:
     from bluemira.geometry.wire import BluemiraWire
 
 import numpy as np
-
 from bluemira.base.look_and_feel import bluemira_warn
 from bluemira.equilibria.grid import Grid
 from bluemira.equilibria.optimisation.constraints import (

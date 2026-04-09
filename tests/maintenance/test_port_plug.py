@@ -6,9 +6,9 @@
 
 import numpy as np
 import pytest
-
 from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.tools import make_polygon
+
 from eudemo.maintenance.port_plug import make_castellated_plug
 
 

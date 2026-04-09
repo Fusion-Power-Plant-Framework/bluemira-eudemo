@@ -6,6 +6,7 @@
 
 
 from bluemira.base.parameter_frame import Parameter
+
 from eudemo.power_cycle import SteadyStatePowerCycleParams, SteadyStatePowerCycleSolver
 
 
