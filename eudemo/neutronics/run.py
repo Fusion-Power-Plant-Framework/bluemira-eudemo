@@ -25,6 +25,7 @@ from bluemira.radiation_transport.neutronics.geometry import TokamakDimensions
 from bluemira.radiation_transport.neutronics.neutronics_axisymmetric import (
     NeutronicsReactor,
 )
+from matproplib.library.fluids import Void
 
 from eudemo.materials import (
     BE12TI_MAT,
@@ -150,7 +151,7 @@ def run_csg_neutronics(
 
     outputs = solver.execute(build_config.get("run_mode", "run"))
 
-    if len(outputs) == 2:  # noqa: PLR2004
+    if len(outputs) == 2:
         res = outputs[0]
         params.update_from_frame(outputs[1])
         bluemira_print(f"CSG TBR: {res.tbr}")
@@ -195,8 +196,8 @@ def run_dagmc_neutronics(
     eq: Equilibrium,
     source: NeutronSourceCreator | None = None,
     tally_function=None,
-) -> DAGMCOutput:
-    """Creates and runs the DAGMC neutronics model"""  # noqa: DOC201
+) -> DAGMCOutput | None:
+    """Creates and runs the DAGMC neutronics model"""
     if not build_config.get("enabled"):
         return None
 
@@ -224,7 +225,7 @@ def run_dagmc_neutronics(
 
     outputs = solver.execute(build_config.get("run_mode", "run"))
 
-    if len(outputs) == 2:  # noqa: PLR2004
+    if len(outputs) == 2:
         res = outputs[0]
         params.update_from_frame(outputs[1])
         bluemira_print(f"DAGMC TBR: {res.tbr}")

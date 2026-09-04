@@ -15,6 +15,7 @@ import numpy as np
 from bluemira.base.constants import EPS
 from bluemira.base.designer import Designer
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
+from bluemira.base.parameter_frame.typed import ParameterFrameLike
 from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.plane import BluemiraPlane
 from bluemira.geometry.tools import make_polygon, slice_shape
@@ -144,7 +145,7 @@ class UpperPortOP(OptimisationProblem):
         """
         return self.gradient
 
-    def constrain_blanket_cut(self, x: np.ndarray) -> np.ndarray:
+    def constrain_blanket_cut(self, vector: np.ndarray) -> np.ndarray:
         """
         Constrain the upper port size.
 
@@ -163,7 +164,7 @@ class UpperPortOP(OptimisationProblem):
         :
             The contraint array
         """
-        ri, ro, ci, gamma = x
+        ri, ro, ci, gamma = vector
         co = self.get_outer_cut_point(ci, gamma)[0]
         c1 = (self.r_ob_max - co + self.c_rm) - (ro - co)
         c2 = (ci - self.r_ib_min) - (ro - ci + self.c_rm)
@@ -232,7 +233,7 @@ class UpperPortKOZDesigner(Designer[tuple[BluemiraFace, float, float]]):
 
     def __init__(
         self,
-        params: dict | ParameterFrame,
+        params: ParameterFrameLike,
         build_config: dict,
         blanket_face: BluemiraFace,
         upper_port_extrema=13,

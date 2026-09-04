@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -54,6 +55,10 @@ from bluemira.magnetostatics.circuits import (
     HelmholtzCage,
 )
 from bluemira.utilities.tools import get_class_from_module
+
+if TYPE_CHECKING:
+    from bluemira.base.parameter_frame.typed import ParameterFrameLike
+    from bluemira.geometry.coordinates import Coordinates
 
 
 class TFCoil(ComponentManager):
@@ -172,7 +177,7 @@ class TFCoilDesignerParams(ParameterFrame):
     r_tf_in: Parameter[float]
 
 
-class TFCoilDesigner(Designer[GeometryParameterisation]):
+class TFCoilDesigner(Designer[tuple[GeometryParameterisation, BluemiraWire, float]]):
     """
     TF Coil Designer
 
@@ -358,7 +363,7 @@ class TFCoilDesigner(Designer[GeometryParameterisation]):
             self._derive_shape_params(self.variables_map), **self._derive_shape_kwargs()
         )
 
-    def run(self) -> tuple[GeometryParameterisation, BluemiraWire]:
+    def run(self) -> tuple[GeometryParameterisation, BluemiraWire, float]:
         """
         Run the specified design optimisation problem to generate the TF coil winding
         pack current centreline.
@@ -436,7 +441,7 @@ class TFCoilDesigner(Designer[GeometryParameterisation]):
             plt.show()
         return result, wp_cross_section, peak_ripple
 
-    def read(self) -> tuple[GeometryParameterisation, BluemiraWire]:
+    def read(self) -> tuple[GeometryParameterisation, BluemiraWire, float]:
         """
         Read in a file to set up a specified GeometryParameterisation and extract the
         current centreline.
@@ -461,9 +466,10 @@ class TFCoilDesigner(Designer[GeometryParameterisation]):
         return (
             parameterisation,
             self._make_wp_xs(parameterisation.create_shape().bounding_box.x_min),
+            np.nan,
         )
 
-    def mock(self) -> tuple[GeometryParameterisation, BluemiraWire]:
+    def mock(self) -> tuple[GeometryParameterisation, BluemiraWire, float]:
         """
         Mock a design of TF coils using the original parameterisation of the current
         centreline.
@@ -474,8 +480,10 @@ class TFCoilDesigner(Designer[GeometryParameterisation]):
             The parameterisation and the winding pack cross section
         """
         parameterisation = self._get_parameterisation()
-        return parameterisation, self._make_wp_xs(
-            parameterisation.create_shape().bounding_box.x_min
+        return (
+            parameterisation,
+            self._make_wp_xs(parameterisation.create_shape().bounding_box.x_min),
+            np.nan,
         )
 
 
@@ -514,11 +522,13 @@ class TFCoilBuilder(Builder):
     INS = "Insulation"
     INB = "inboard"
     OUTB = "outboard"
+
+    params: TFCoilBuilderParams
     param_cls: type[TFCoilBuilderParams] = TFCoilBuilderParams
 
     def __init__(
         self,
-        params: ParameterFrame | dict,
+        params: ParameterFrameLike,
         build_config: dict,
         centreline: BluemiraWire,
         wp_cross_section: BluemiraWire,
@@ -618,7 +628,8 @@ class TFCoilBuilder(Builder):
         # to be 2.
         sector_degree, n_sectors = get_n_sectors(self.params.n_TF.value, degree)
         n_sectors = min(
-            n_sectors, get_n_sectors(self.params.n_TF.value + 1e3 * EPS, degree)[1] + 1
+            n_sectors,
+            get_n_sectors(int(self.params.n_TF.value + 1e3 * EPS), degree)[1] + 1,
         )
 
         wp_sector = self._build_xyz_wp()
@@ -879,11 +890,7 @@ class TFCoilBuilder(Builder):
         points = self.centreline.discretise(byedges=True, ndiscr=2000)
         x_max = np.max(points.x)
         outer_face = deepcopy(face)
-        outer_face.translate((
-            x_max - outer_face.center_of_mass[0],
-            0,
-            0,
-        ))
+        outer_face.translate((x_max - outer_face.center_of_mass[0], 0, 0))
         return face, outer_face
 
     def _make_cas_xsec(self) -> tuple[float, BluemiraWire, BluemiraWire]:
@@ -966,7 +973,7 @@ class TFCoilBuilder(Builder):
         )
         wires.sort(key=lambda wire: wire.length)
 
-        if len(wires) != 4:  # noqa: PLR2004
+        if len(wires) != 4:
             raise BuilderError(
                 "Unexpected TF coil x-z cross-section. It is likely that a previous "
                 "boolean cutting operation failed to create a hollow solid."
@@ -979,7 +986,7 @@ class TFCoilBuilder(Builder):
         y_in: float,
         inner_xs: BluemiraWire,
         outer_xs: BluemiraWire,
-        centreline_points: np.ndarray,
+        centreline_points: Coordinates,
     ) -> BluemiraSolid:
         """
         Make inner cross section for casing x-y-z
@@ -1022,7 +1029,7 @@ class TFCoilBuilder(Builder):
         cut_wires = slice_shape(casing_solid, xz_plane)
         cut_wires.sort(key=lambda wire: wire.length)
 
-        if len(cut_wires) != 2:  # noqa: PLR2004
+        if len(cut_wires) != 2:
             raise BuilderError(
                 f"Expecting 2 wires here but there are: {len(cut_wires)} of them"
             )

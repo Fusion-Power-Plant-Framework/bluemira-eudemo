@@ -11,7 +11,7 @@ from enum import Enum, auto
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from bluemira.base.parameter_frame import ParameterFrame
+    from bluemira.base.parameter_frame.typed import ParameterFrameT
     from bluemira.geometry.parameterisations import GeometryParameterisation
     from bluemira.geometry.wire import BluemiraWire
 
@@ -60,10 +60,10 @@ def estimate_kappa95(A: float, m_s_limit: float) -> float:
     design driving. Exercise caution.
     \t:math:`m_{s} = a\\kappa_{95}^{2}+bA^{2}+c\\kappa A+d\\kappa+eA+f`\n
     \t:math:`\\kappa_{95}(A, m_{s}) = \\dfrac{-d-cA-\\sqrt{(c^{2}-4ab)A^{2}+(2dc-4ae)A+d^{2}-4af+4am_{s})}}{2a}`
-    """  # noqa: W505, E501
-    if not 2.6 <= A <= 3.6:  # noqa: PLR2004
+    """  # noqa: E501
+    if not 2.6 <= A <= 3.6:
         bluemira_warn(f"Kappa 95 estimate only valid for 2.6 <= A <= 3.6, not A = {A}")
-    if not 0.0 <= m_s_limit <= 0.8655172413793104:  # noqa: PLR2004
+    if not 0.0 <= m_s_limit <= 0.8655172413793104:
         bluemira_warn(
             "Kappa 95 estimate only valid for 0.0 <= m_s <= 0.865, not m_s ="
             f" {m_s_limit}"
@@ -90,7 +90,7 @@ def estimate_kappa95(A: float, m_s_limit: float) -> float:
 
     # We're going to trim kappa_95 to 1.8, which is the maximum of the data, keeping
     # the function smooth
-    if kappa_95 > 1.77:  # noqa: PLR2004
+    if kappa_95 > 1.77:
         ratio = 1.77 / kappa_95
         corner_fudge = 0.3 * (kappa_95 - 1.77) / ratio
         kappa_95 = kappa_95 ** (ratio) + corner_fudge
@@ -99,10 +99,10 @@ def estimate_kappa95(A: float, m_s_limit: float) -> float:
 
 
 def handle_lcfs_shape_input(
-    param_cls: GeometryParameterisation,
-    params: ParameterFrame,
+    param_cls: type[GeometryParameterisation],
+    params: ParameterFrameT,
     shape_config: dict[str, float],
-) -> dict[str, float]:
+) -> dict[str, dict[str, float]]:
     """
     Process the LCFS shape parameterisation inputs based on a parameterisation
     and a shape configuration.
@@ -347,12 +347,11 @@ class EUDEMODoubleNullConstraints(DivertorLegCalculator, MagneticConstraintSet):
         delta: float,
         psi_neg: float,
         psi_pos: float,
-        div_l_ib: float,  # noqa: ARG002
-        div_l_ob: float,  # noqa: ARG002
+        div_l_ib: float,
+        div_l_ob: float,
         psibval: float,
         n: int = 400,
     ):
-        super().__init__()
         f_s = flux_surface_johner(
             R_0,
             Z_0,

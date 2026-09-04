@@ -14,8 +14,6 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 import numpy as np
-from matproplib.library.fluids import Void
-
 from bluemira.base.builder import Builder
 from bluemira.base.components import Component, PhysicalComponent
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
@@ -24,10 +22,12 @@ from bluemira.display.palettes import BLUE_PALETTE
 from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.tools import boolean_fuse, extrude_shape, offset_wire
 from bluemira.geometry.wire import BluemiraWire
+from matproplib.library.fluids import Void
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Iterable, Sequence
 
+    from bluemira.base.parameter_frame.typed import ParameterFrameLike
     from bluemira.geometry.solid import BluemiraSolid
 
 
@@ -36,7 +36,7 @@ def make_castellated_plug(
     vec: tuple[float, float, float],
     length: float,
     offsets: float | Iterable[float],
-    distances: Iterable[float] | None = None,
+    distances: Sequence[float] | None = None,
     n_castellations: int | None = None,
 ) -> BluemiraSolid:
     """
@@ -80,7 +80,7 @@ def make_castellated_plug(
         raise ValueError("Both distance and n_castellations parameters are None")
 
     # Check/Set-up offsets iterable
-    if type(offsets) is float:
+    if isinstance(offsets, float):
         off_iter = [offsets] * len(dist_iter)
     elif len(offsets) == len(dist_iter):
         off_iter = offsets
@@ -92,20 +92,20 @@ def make_castellated_plug(
 
     base = face
     sections = []
-    _prev_dist = 0
+    prev_dist_ = 0
     for dist, off in parameter_array:
-        ext_vec = vec * (dist - _prev_dist)
+        ext_vec = vec * (dist - prev_dist_)
         sections.append(extrude_shape(base, ext_vec))
         base.translate(ext_vec)
         base = BluemiraFace(offset_wire(BluemiraWire(base.wires), off))
-        _prev_dist = dist
+        prev_dist_ = dist
 
     return boolean_fuse(sections)
 
 
 def make_onion_layer_plug_void(
     outer_profiles: Iterable[BluemiraWire],
-    target_profile: BluemiraFace,
+    target_profile: BluemiraFace | BluemiraWire,
     thickness: float,
     offset: float,
     gap: float,
@@ -208,16 +208,17 @@ class CryostatPortPlugBuilder(Builder):
     Cryostat port plug builder.
     """
 
+    params: CryostatPortPlugBuilderParams
     param_cls: type[CryostatPortPlugBuilderParams] = CryostatPortPlugBuilderParams
 
     PORT_PLUG = "Port Plug"
 
     def __init__(
         self,
-        params: dict | ParameterFrame | CryostatPortPlugBuilderParams,
+        params: ParameterFrameLike,
         build_config: dict | None,
         outer_profiles: Iterable[BluemiraWire],
-        cryostat_xz_boundary: BluemiraFace,
+        cryostat_xz_boundary: BluemiraWire,
     ):
         super().__init__(params, build_config)
         self.outer_profiles = outer_profiles
@@ -292,13 +293,14 @@ class RadiationPortPlugBuilder(Builder):
     Radiation shield port plug builder.
     """
 
+    params: RadiationPortPlugBuilderParams
     param_cls: type[RadiationPortPlugBuilderParams] = RadiationPortPlugBuilderParams
 
     PORT_PLUG = "Port Plug"
 
     def __init__(
         self,
-        params: dict | ParameterFrame | RadiationPortPlugBuilderParams,
+        params: ParameterFrameLike,
         build_config: dict | None,
         outer_profiles: Iterable[BluemiraWire],
         radiation_xz_boundary: BluemiraFace,

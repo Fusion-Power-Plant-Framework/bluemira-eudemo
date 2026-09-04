@@ -365,8 +365,8 @@ class PFCoilsDesigner(Designer[CoilSet]):
             constraint_value=0.0,
         )
         psi_inner = PsiConstraint(
-            [x_lcfs[i] for i in [arg_outer]],
-            [z_lcfs[i] for i in [arg_outer]],
+            x_lcfs[arg_outer],
+            z_lcfs[arg_outer],
             target_value=1.0,
             tolerance=1e-3,
         )

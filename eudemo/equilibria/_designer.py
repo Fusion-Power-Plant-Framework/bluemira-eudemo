@@ -18,6 +18,7 @@ from bluemira.base.designer import Designer
 from bluemira.base.file import get_bluemira_path, get_bluemira_root
 from bluemira.base.look_and_feel import bluemira_warn
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
+from bluemira.base.parameter_frame.typed import ParameterFrameLike
 from bluemira.codes.plasmod.equilibrium_2d_coupling import solve_transport_fixed_boundary
 from bluemira.codes.wrapper import transport_code_solver
 from bluemira.equilibria import Equilibrium
@@ -131,7 +132,7 @@ class EquilibriumDesigner(Designer[Equilibrium]):
     params: EquilibriumDesignerParams
     param_cls: type[EquilibriumDesignerParams] = EquilibriumDesignerParams
 
-    def __init__(self, params: dict | ParameterFrame, build_config: dict | None = None):
+    def __init__(self, params: ParameterFrameLike, build_config: dict | None = None):
         super().__init__(params, build_config)
         self.file_path = self.build_config.get("file_path", None)
         self.diagnostic_plotting = PicardDiagnosticOptions(
@@ -547,7 +548,7 @@ class DummyFixedEquilibriumDesigner(Designer[tuple[Coordinates, Profile]]):
         param_cls = self.build_config.get(
             "param_class", "bluemira.equilibria.shapes.JohnerLCFS"
         )
-        param_cls = get_class_from_module(param_cls)
+        param_cls: type[GeometryParameterisation] = get_class_from_module(param_cls)
         shape_config = self.build_config.get("shape_config", {})
         input_dict = handle_lcfs_shape_input(param_cls, self.params, shape_config)
         lcfs_parameterisation = param_cls(input_dict)
@@ -629,7 +630,7 @@ class ReferenceFreeBoundaryEquilibriumDesigner(Designer[Equilibrium]):
 
     def __init__(
         self,
-        params: dict | ParameterFrame,
+        params: ParameterFrameLike,
         build_config: dict | None = None,
         lcfs_coords: Coordinates | None = None,
         profiles: Profile | None = None,

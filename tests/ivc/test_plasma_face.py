@@ -43,7 +43,7 @@ class TestPlasmaFaceDesigner:
             self._params, self.ivc_boundary, self.wall_boundary, self.divertor_silhouette
         )
 
-        (blanket_face, divertor_face, div_wall_join_pt) = designer.execute()
+        (blanket_face, divertor_face, _div_wall_join_pt) = designer.execute()
         # U shape
         bf_area = 20 * 2 + 1 * 12
         assert pytest.approx(blanket_face.area) == bf_area - designer.params.c_rm.value

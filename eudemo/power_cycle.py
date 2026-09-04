@@ -41,7 +41,7 @@ class BlanketType(Enum):
     WCLL = auto()
 
     @classmethod
-    def _missing_(cls, value: str):
+    def _missing_(cls, value):
         try:
             return cls[value.upper()]
         except KeyError:
@@ -98,7 +98,7 @@ class EUDEMOReferenceParasiticLoadStrategy(ParasiticLoadStrategy):
         self.p_t_plant = 15.5e6
         self.p_other = 31e6
 
-    def calculate(self, p_fusion) -> tuple[float, ...]:
+    def calculate(self, p_fusion) -> tuple[float, float, float, float]:
         """
         Because we were told to do this. Nobody trusts models.
 

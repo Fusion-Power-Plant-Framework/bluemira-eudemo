@@ -184,8 +184,8 @@ class EUDEMOReactorParams(ParameterFrame):
     fw_psi_n: Parameter[float]
 
     # Divertor silhouette
-    div_Ltarg_ib: Parameter[float]  # noqa: N815
-    div_Ltarg_ob: Parameter[float]  # noqa: N815
+    div_Ltarg_ib: Parameter[float]
+    div_Ltarg_ob: Parameter[float]
     div_targ_angle_ib: Parameter[float]
     div_targ_angle_ob: Parameter[float]
     div_targ_type_ib: Parameter[str]
@@ -266,7 +266,7 @@ class EUDEMOReactorParams(ParameterFrame):
 
     # First wall panelling
     fw_a_max: Parameter[float]
-    fw_dL_min: Parameter[float]  # noqa: N815
+    fw_dL_min: Parameter[float]
 
     # CSG neutronics
     # TODO: What ever happened to these...? They never got used.
@@ -287,7 +287,7 @@ class EUDEMOReactorParams(ParameterFrame):
     P_n_aux: Parameter[float]
     P_n_e_mult: Parameter[float]
     P_n_decay: Parameter[float]
-    peak_NWL: Parameter[float]  # noqa: N815
+    peak_NWL: Parameter[float]
     peak_bb_iron_dpa_rate: Parameter[float]
     peak_vv_iron_dpa_rate: Parameter[float]
     peak_div_cu_dpa_rate: Parameter[float]

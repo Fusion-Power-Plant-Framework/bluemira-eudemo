@@ -74,7 +74,7 @@ class TestTFCoilDesigner:
             separatrix=self.lcfs,
             keep_out_zone=self.vvts_koz,
         )
-        param, wp = designer.execute()
+        param, wp, _ = designer.execute()
 
         assert np.isclose(param.variables["sl"].value, 5)
         assert np.isclose(param.variables["x1"].value, wp.center_of_mass[0])
@@ -133,7 +133,7 @@ class TestTFCoilDesigner:
             separatrix=self.lcfs,
             keep_out_zone=self.vvts_koz,
         )
-        d_mock, _ = designer_mock.execute()
+        d_mock, _, _ = designer_mock.execute()
         assert d_run.create_shape().length != d_mock.create_shape().length
         assert designer.problem_settings == config["problem_settings"]
         assert designer.opt_config == config["optimisation_settings"]

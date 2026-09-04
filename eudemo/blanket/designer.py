@@ -13,6 +13,7 @@ from bluemira.base.designer import Designer
 from bluemira.base.error import BuilderError
 from bluemira.base.look_and_feel import bluemira_warn
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
+from bluemira.base.parameter_frame.typed import ParameterFrameLike
 from bluemira.geometry.constants import VERY_BIG
 from bluemira.geometry.coordinates import Coordinates
 from bluemira.geometry.face import BluemiraFace
@@ -38,7 +39,7 @@ class BlanketDesignerParams(ParameterFrame):
     """Remote maintenance clearance [m]."""
     fw_a_max: Parameter[float]
     """Maximum angle of rotation between adjacent panels [degrees]."""
-    fw_dL_min: Parameter[float]  # noqa: N815
+    fw_dL_min: Parameter[float]
     """Minimum length for an individual panel [m]."""
 
 
@@ -88,7 +89,7 @@ class BlanketDesigner(Designer[tuple[BluemiraFace, BluemiraFace, Coordinates]]):
 
     def __init__(
         self,
-        params: dict | ParameterFrame,
+        params: ParameterFrameLike,
         blanket_boundary: BluemiraWire,
         blanket_silhouette: BluemiraFace,
         r_inner_cut: float,
@@ -99,7 +100,7 @@ class BlanketDesigner(Designer[tuple[BluemiraFace, BluemiraFace, Coordinates]]):
         self.boundary = blanket_boundary
         self.silhouette = blanket_silhouette
         self.r_inner_cut = r_inner_cut
-        if abs(cut_angle) >= 90:  # noqa: PLR2004
+        if abs(cut_angle) >= 90:
             raise ValueError(
                 "Cannot cut boundary silhouette at an angle greater than 90°."
             )
@@ -117,7 +118,7 @@ class BlanketDesigner(Designer[tuple[BluemiraFace, BluemiraFace, Coordinates]]):
             Merged coordinates
         """
         sm_dist = np.inf
-        closest_points = None
+        closest_points = (np.nan, np.nan)
         for ib_pt in ib_panels.points:
             dists = [euclidean(ib_pt, ob_pt) for ob_pt in ob_panels.points]
             sm_dist_idx = np.argmin(dists)
@@ -252,12 +253,12 @@ class BlanketDesigner(Designer[tuple[BluemiraFace, BluemiraFace, Coordinates]]):
             boolean cut returns too few segments
         """
         parts = boolean_cut(geom, cut_tool)
-        if len(parts) < 2:  # noqa: PLR2004
+        if len(parts) < 2:
             raise BuilderError(
                 f"BB poloidal segmentation only returned {len(parts)} part(s), expected "
                 "2."
             )
-        if len(parts) > 2:  # noqa: PLR2004
+        if len(parts) > 2:
             bluemira_warn(
                 "The BB poloidal segmentation operation returned more than 2 parts "
                 f"({len(parts)}); only taking the first two..."

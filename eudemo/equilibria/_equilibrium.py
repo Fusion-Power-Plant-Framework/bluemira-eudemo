@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
 from dataclasses import dataclass
 
-from bluemira.base.parameter_frame import Parameter, ParameterFrame
+from bluemira.base.parameter_frame import ParamDictT, Parameter, ParameterFrame
 from bluemira.equilibria import Equilibrium
 from bluemira.equilibria.find import OPointCalcOptions
 from bluemira.equilibria.profiles import BetaIpProfile, Profile
@@ -42,7 +42,7 @@ class EquilibriumParams(ParameterFrame):
 
 
 def make_equilibrium(
-    _params: EquilibriumParams | dict,
+    _params: EquilibriumParams | dict[str, ParamDictT],
     tf_coil_boundary: BluemiraWire,
     grid_settings: dict,
     o_point_fallback: OPointCalcOptions = OPointCalcOptions.GRID_CENTRE,
@@ -107,7 +107,7 @@ class ReferenceEquilibriumParams(ParameterFrame):
 
 
 def make_reference_equilibrium(
-    _params: ReferenceEquilibriumParams | dict,
+    _params: ReferenceEquilibriumParams | dict[str, ParamDictT],
     tf_track: BluemiraWire,
     lcfs_shape: BluemiraWire,
     profiles: Profile,

@@ -14,6 +14,7 @@ from dataclasses import dataclass
 import numpy as np
 from bluemira.base.designer import Designer
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
+from bluemira.base.parameter_frame.typed import ParameterFrameLike
 from bluemira.geometry.base import BluemiraGeo
 from bluemira.geometry.constants import D_TOLERANCE
 from bluemira.geometry.error import GeometryError
@@ -64,7 +65,7 @@ class LowerPortKOZDesigner(Designer):
 
     def __init__(
         self,
-        params: dict | ParameterFrame,
+        params: ParameterFrameLike,
         build_config: dict,
         divertor_xz: BluemiraFace,
         div_wall_join_pt: tuple[float, float],
@@ -337,7 +338,7 @@ class LowerPortKOZDesigner(Designer):
 
         itc_pts = self._intersection_points(angled_duct_boundary, tf_offset_boundary)
 
-        if len(itc_pts) < 2:  # noqa: PLR2004
+        if len(itc_pts) < 2:
             raise GeometryError(
                 "LowerPortDesigner: angled duct must be made larger (increase r_search)"
             )
@@ -351,7 +352,7 @@ class LowerPortKOZDesigner(Designer):
         itc_bot_ib_pt = (itc_bot_ib_pt[0], itc_bot_ib_pt[2])
 
         if (
-            self.params.lower_port_angle.value < -45  # noqa: PLR2004
+            self.params.lower_port_angle.value < -45
             and itc_top_ob_pt[0] < itc_bot_ib_pt[0]
         ):
             # This is a weird edge case where the 'top' x point is more
@@ -360,7 +361,7 @@ class LowerPortKOZDesigner(Designer):
 
         # choose corner point
         topleft_corner_pt = itc_bot_ib_pt
-        if self.params.lower_port_angle.value > -45:  # noqa: PLR2004
+        if self.params.lower_port_angle.value > -45:
             topleft_corner_pt = itc_top_ob_pt
 
         topright_corner_pt = (x_duct_extent, topleft_corner_pt[1])

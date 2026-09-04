@@ -25,7 +25,7 @@ class PanellingDesignerParams(ParameterFrame):
 
     fw_a_max: Parameter[float]
     """The maximum angle of rotation between adjacent panels [degrees]."""
-    fw_dL_min: Parameter[float]  # noqa: N815
+    fw_dL_min: Parameter[float]
     """The minimum length for an individual panel [m]."""
 
 

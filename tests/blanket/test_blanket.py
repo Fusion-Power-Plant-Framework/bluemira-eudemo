@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
 
 from eudemo.blanket import BlanketBuilder
-from eudemo_tests.blanket.tools import make_simple_blanket
+from tests.blanket.tools import make_simple_blanket
 
 
 def make_blanket_component():

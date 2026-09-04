@@ -36,6 +36,7 @@ from eudemo.comp_managers import PortManagerMixin
 from eudemo.maintenance.duct_connection import join_ports
 
 if TYPE_CHECKING:
+    from bluemira.base.parameter_frame.typed import ParameterFrameLike
     from bluemira.geometry.wire import BluemiraWire
 
 
@@ -157,10 +158,11 @@ class VacuumVesselBuilder(Builder):
     VV = "VV"
     BODY = "Body"
     VOID = "Vessel voidspace"
+    params: VacuumVesselBuilderParams
     param_cls: type[VacuumVesselBuilderParams] = VacuumVesselBuilderParams
 
     def __init__(
-        self, params: ParameterFrame | dict, build_config: dict, ivc_koz: BluemiraWire
+        self, params: ParameterFrameLike, build_config: dict, ivc_koz: BluemiraWire
     ):
         super().__init__(params, build_config)
         self.ivc_koz = ivc_koz

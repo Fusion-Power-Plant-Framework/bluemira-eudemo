@@ -124,7 +124,7 @@ class TestDuctConnection:
         # is the bigger wire inside the smaller wire
         assert diff > 0
         once = twice = 0
-        for _no, (e1, e2) in enumerate(
+        for _no, (e1, e2) in enumerate(  # noqa: RUF052
             zip(
                 sorted(
                     xy.wires[0].edges,

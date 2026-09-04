@@ -340,9 +340,14 @@ GitHub.sublime-settings
 
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,pycharm,sublimetext
 
+# polyscope
+.polyscope.ini
+imgui.ini
+
 report.html
 .hatch
 */_version.py
 bluemira
 .vscode/
 _version.py
+results_*

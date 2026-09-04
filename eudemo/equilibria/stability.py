@@ -8,7 +8,7 @@
 from copy import deepcopy
 
 from bluemira.base.look_and_feel import bluemira_print
-from bluemira.base.parameter_frame._frame import ParameterFrame
+from bluemira.base.parameter_frame.typed import ParameterFrameT
 from bluemira.equilibria.equilibrium import Equilibrium
 from bluemira.equilibria.vertical_stability import (
     calculate_rzip_stability_criterion,
@@ -20,8 +20,8 @@ from bluemira.geometry.wire import BluemiraWire
 
 
 def run_vertical_stability_calculation(
-    params: dict | ParameterFrame,
-    build_config: dict,  # noqa: ARG001
+    params: ParameterFrameT,
+    build_config: dict,
     eq: Equilibrium,
     vv_outer_wire: BluemiraWire,
     vv_inner_wire: BluemiraWire,

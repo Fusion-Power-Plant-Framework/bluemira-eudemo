@@ -8,7 +8,6 @@ from typing import ClassVar
 
 import numpy as np
 import pytest
-
 from bluemira.geometry.error import GeometryError
 from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.parameterisations import PictureFrame
@@ -22,6 +21,7 @@ from bluemira.geometry.tools import (
     make_polygon,
     revolve_shape,
 )
+
 from eudemo.maintenance import duct_connection
 from eudemo.maintenance.duct_connection import (
     VVEquatorialPortDuctBuilder,
@@ -29,7 +29,6 @@ from eudemo.maintenance.duct_connection import (
     make_equatorial_port_yz_face,
     pipe_pipe_join,
 )
-
 from eudemo.vacuum_vessel import VacuumVesselBuilder
 
 

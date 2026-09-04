@@ -231,7 +231,7 @@ class BlanketBuilder(Builder):
         """
         Create the sub-layer-segments of the blanket from a silhouette of
         a sub-layer.
-        """  # noqa: DOC201
+        """
         if inboard:
             n_seg_per_sector = self.params.n_bb_inboard.value
             name = self.IBS

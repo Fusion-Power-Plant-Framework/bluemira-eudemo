@@ -98,7 +98,7 @@ class TSUpperPortDuctBuilder(Builder):
             None, [self.build_xy(xy_face)], self.build_xyz(xy_face)
         )
 
-    def build_xyz(self, xy_face: BluemiraFace) -> PhysicalComponent:
+    def build_xyz(self, xy_face: BluemiraFace) -> list[PhysicalComponent]:
         """
         Build upper port xyz
 
@@ -394,7 +394,7 @@ class VVEquatorialPortDuctBuilder(Builder):
 
         return self.component_tree(None, None, self.build_xyz(yz_face))
 
-    def build_xyz(self, yz_face: BluemiraFace) -> PhysicalComponent:
+    def build_xyz(self, yz_face: BluemiraFace) -> list[PhysicalComponent]:
         """
         Build equatorial port xyz
 

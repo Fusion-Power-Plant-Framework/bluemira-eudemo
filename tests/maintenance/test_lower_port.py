@@ -86,7 +86,7 @@ class TestLowerPort:
         tf = self._make_tf()
 
         (
-            lp_duct_xz_void_space,
+            _lp_duct_xz_void_space,
             lp_duct_xz_koz,
             lp_duct_angled_nowall_extrude_boundary,
             lp_duct_straight_nowall_extrude_boundary,

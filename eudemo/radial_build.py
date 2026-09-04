@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from bluemira.base.parameter_frame.typed import ParameterFrameT
 from bluemira.codes import systems_code_solver
 from bluemira.codes.process.api import Impurities
 from bluemira.codes.process.equation_variable_mapping import Constraint, Objective
@@ -19,15 +20,14 @@ from bluemira.codes.process.model_mapping import (
     BetaLimitModel,
     BetaNormMaxModel,
     BootstrapCurrentScalingLaw,
-    CSSuperconductorModel,
     ConfinementTimeScalingLaw,
     CostModel,
+    CSSuperconductorModel,
     CurrentDriveEfficiencyModel,
     DensityLimitModel,
     OperationModel,
     OutputCostsSwitch,
     PFSuperconductorModel,
-    PROCESSOptimisationAlgorithm,
     PlasmaCurrentScalingLaw,
     PlasmaGeometryModel,
     PlasmaNullConfigurationModel,
@@ -35,6 +35,7 @@ from bluemira.codes.process.model_mapping import (
     PlasmaProfileModel,
     PowerFlowModel,
     PrimaryPumpingModel,
+    PROCESSOptimisationAlgorithm,
     SecondaryCycleModel,
     ShieldThermalHeatUse,
     SolenoidSwitchModel,
@@ -303,7 +304,7 @@ template_builder.add_input_values({
 })
 
 
-def apply_specific_B_to_P_interface_rules(params: ParameterFrame):
+def apply_specific_B_to_P_interface_rules(params: ParameterFrameT):
     """
     Apply specific rules for the interface between BLUEMIRA and PROCESS
     that relate to the EU-DEMO design parameterisation
@@ -341,7 +342,7 @@ def apply_specific_B_to_P_interface_rules(params: ParameterFrame):
 
 
 def apply_specific_P_to_B_interface_rules(
-    params: ParameterFrame, process_params: ParameterFrame
+    params: ParameterFrameT, process_params: ParameterFrameT
 ):
     """
     Apply specific rules for the interface between BLUEMIRA and PROCESS
@@ -357,7 +358,7 @@ def apply_specific_P_to_B_interface_rules(
     })
 
 
-def radial_build(params: ParameterFrame, build_config: dict) -> ParameterFrame:
+def radial_build(params: ParameterFrameT, build_config: dict) -> ParameterFrameT:
     """
     Update parameters after a radial build is run/read/mocked using PROCESS.
 

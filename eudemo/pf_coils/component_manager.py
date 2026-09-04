@@ -24,7 +24,7 @@ class PFCoil(ComponentManager):
     def cad_construction_type() -> CADConstructionType:
         """
         Returns the construction type of the component tree wrapped by this manager.
-        """  # noqa: DOC201
+        """
         return CADConstructionType.REVOLVE_XZ
 
     @property

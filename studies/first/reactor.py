@@ -32,7 +32,7 @@ from bluemira.base.designer import run_designer
 from bluemira.base.file import get_bluemira_path, make_bluemira_path
 from bluemira.base.logs import set_log_level
 from bluemira.base.look_and_feel import bluemira_error, bluemira_print
-from bluemira.base.parameter_frame import ParameterFrame
+from bluemira.base.parameter_frame.typed import ParameterFrameLike
 from bluemira.base.reactor import Reactor
 from bluemira.base.reactor_config import ReactorConfig
 from bluemira.builders.cryostat import CryostatBuilder, CryostatDesigner
@@ -52,6 +52,7 @@ from bluemira.geometry.tools import (
     offset_wire,
     save_cad,
 )
+from bluemira.geometry.wire import BluemiraWire
 from bluemira.materials.cache import establish_material_cache
 from bluemira.radiation_transport.neutronics.zero_d_neutronics import (
     ZeroDNeutronicsModel,
@@ -103,7 +104,7 @@ from eudemo.radial_build import radial_build
 from eudemo.tf_coils import TFCoil, TFCoilBuilder, TFCoilDesigner
 from eudemo.vacuum_vessel import VacuumVessel, VacuumVesselBuilder
 
-CONFIG_DIR = Path(__file__).parent.parent / "config"
+CONFIG_DIR = Path(__file__).parent / "config"
 BUILD_CONFIG_FILE_PATH = Path(CONFIG_DIR, "build_config.json").as_posix()
 
 
@@ -128,7 +129,7 @@ class EUDEMO(Reactor):
 
 
 def build_reference_equilibrium(
-    params: dict | ParameterFrame,
+    params: ParameterFrameLike,
     build_config: dict,
     equilibrium_manager: EquilibriumManager,
     lcfs_coords: Coordinates | None,
@@ -273,7 +274,9 @@ def build_blanket(
     return Blanket(builder.build(), panel_points, r_inner_cut)
 
 
-def build_tf_coils(params, build_config, separatrix, vvts_cross_section) -> TFCoil:
+def build_tf_coils(
+    params, build_config, separatrix, vvts_cross_section
+) -> tuple[TFCoil, float]:
     """Design and build the TF coils for the reactor.
 
     Returns
@@ -355,8 +358,7 @@ def build_upper_port(
     params,
     build_config,
     upper_port_koz: BluemiraFace,
-    pf_coils,
-    cryostat_ts_xz_boundary: BluemiraFace,
+    cryostat_ts_xz_boundary: BluemiraWire,
 ) -> tuple[Component, ...]:
     """
     Build the upper port for the reactor.
@@ -459,7 +461,7 @@ def build_radiation_shield(params, build_config, cryostat_koz) -> RadiationShiel
 
 
 def build_cryostat_plugs(
-    params, build_config, ts_ports, cryostat_xz_boundary: BluemiraFace
+    params, build_config, ts_ports, cryostat_xz_boundary: BluemiraWire
 ) -> Component:
     """
     Build the port plugs for the cryostat.
@@ -879,7 +881,6 @@ if __name__ == "__main__":
             reactor_config.params_for("Upper Port"),
             reactor_config.config_for("Upper Port"),
             upper_port_koz_xz,
-            reactor.pf_coils,
             cryostat_thermal_shield.xz_boundary,
         )
         ts_eq_port, vv_eq_port = build_equatorial_port(

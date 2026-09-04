@@ -33,7 +33,7 @@ jobs:
       - name: Build bluemira
         uses: Fusion-Power-Plant-Framework/fppf-actions/build-action@main
         with:
-          python-version: "3.11"
+          python-version: "3.12"
           clone-bluemira: "true"
 
       - name: Run pytest

@@ -118,7 +118,7 @@ class PanellingOptProblem(OptimisationProblem):
         """
         return 2 * self.paneller.n_panels - 1
 
-    def constrain_min_length_and_angles(self, x: np.ndarray) -> np.ndarray:
+    def constrain_min_length_and_angles(self, vector: np.ndarray) -> np.ndarray:
         """Constraint function function for the optimiser.
 
         Returns
@@ -128,8 +128,8 @@ class PanellingOptProblem(OptimisationProblem):
         """
         n_panels = self.paneller.n_panels
         constraint = np.empty(self.n_constraints, dtype=float)
-        constraint[:n_panels] = self._constrain_min_length(x)
-        constraint[n_panels:] = self._constrain_max_angle(x)
+        constraint[:n_panels] = self._constrain_min_length(vector)
+        constraint[n_panels:] = self._constrain_max_angle(vector)
         return constraint
 
     def _constrain_min_length(self, x: np.ndarray) -> np.ndarray:

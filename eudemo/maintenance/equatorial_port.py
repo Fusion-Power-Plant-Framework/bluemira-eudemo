@@ -14,6 +14,7 @@ from bluemira.base.builder import Builder
 from bluemira.base.components import Component, PhysicalComponent
 from bluemira.base.designer import Designer
 from bluemira.base.parameter_frame import Parameter, ParameterFrame
+from bluemira.base.parameter_frame.typed import ParameterFrameLike
 from bluemira.base.reactor import ComponentManager
 from bluemira.builders.tools import apply_component_display_options
 from bluemira.display.palettes import BLUE_PALETTE
@@ -36,7 +37,8 @@ class EquatorialPort(ComponentManager):
             A wire defining the x-z boundary of the Equatorial Port
         """
         return (
-            self.component
+            self
+            .component()
             .get_component("xz")
             .get_component(EquatorialPortDuctBuilder.NAME)
             .shape.boundary[0]
@@ -66,18 +68,19 @@ class EquatorialPortKOZDesignerParams(ParameterFrame):
     ep_height: Parameter[float]
 
 
-class EquatorialPortKOZDesigner(Designer):
+class EquatorialPortKOZDesigner(Designer[BluemiraFace]):
     """
     Equatorial Port Keep-out Zone Designer
     - Builds a rectangular horizontal keep-out zone
     offset out from the equatorial port x-z profile
     """
 
+    params: EquatorialPortKOZDesignerParams
     param_cls: type[EquatorialPortKOZDesignerParams] = EquatorialPortKOZDesignerParams
 
     def __init__(
         self,
-        params: dict | ParameterFrame | EquatorialPortKOZDesignerParams,
+        params: ParameterFrameLike,
         build_config: dict | None,
         x_ob: float,
     ):
@@ -104,7 +107,7 @@ class EquatorialPortKOZDesigner(Designer):
         self.x_ob = x_ob
         self.z_pos = self.params.ep_z_position.value
 
-    def run(self) -> BluemiraWire:
+    def run(self) -> BluemiraFace:
         """
         Design the xz keep-out zone profile of the equatorial port
 

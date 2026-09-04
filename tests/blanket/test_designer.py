@@ -11,7 +11,7 @@ from bluemira.geometry.face import BluemiraFace
 from bluemira.geometry.tools import make_polygon
 
 from eudemo.blanket import BlanketDesigner
-from eudemo_tests.blanket.tools import make_simple_blanket
+from tests.blanket.tools import make_simple_blanket
 
 
 class TestBlanketDesigner:
@@ -111,7 +111,7 @@ class TestBlanketDesigner:
         # within the BlanketDesigner, we can't initialise the
         # PanellingDesigner first. This probably speaks to a bit of a
         # design issue.
-        panel_points, blanket = make_simple_blanket()
+        _panel_points, blanket = make_simple_blanket()
         d = 3 * np.sqrt(2) / 2
         # fmt: off
         ib_panel_coords = np.array([
@@ -136,7 +136,7 @@ class TestBlanketDesigner:
 
         with mock.patch.object(designer, "segment_blanket") as sb_mock:
             sb_mock.return_value = blanket
-            ib, ob, panels = designer.run()
+            ib, ob, _panels = designer.run()
 
         # These areas were (painstakingly) worked out by hand
         panel_trapezium_area = 9 / 2 * (4 * np.sqrt(2) - 5)
