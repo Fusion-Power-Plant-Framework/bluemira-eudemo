@@ -1,29 +1,23 @@
 # EU-DEMO Reactor Design
 
-__Work in progress: this model is not yet fully functional__
-
-This repo contains the EU-DEMO reactor design.
-To use the `eudemo` package, you must add its path to your Python path:
+To set up your bluemira environment run the following
 
 ```bash
-export PYTHONPATH="<path/to/bluemira>/eudemo:${PYTHONPATH}"
+bash scripts/install_bluemira.sh -i -t develop
 ```
-
-To run the reactor build,
-`cd` into the `eudemo` directory and run the `reactor.py` file:
+If you have already have a conda installation you can remove `-i` and the conda step will be skipped.
 
 ```bash
-cd <path/to/bluemira>/eudemo
-python eudemo/reactor.py
+source ~/.miniforge-init.sh
+conda activate bluemira-eudemo
 ```
+## Running reactor designs
 
-The `cd` is required, as the paths in the build config are
-relative to the `eudemo` directory.
-
-In future this will be moved to a separate repository.
-It should be used as a template for how we expect
-other reactor repositories to be structured.
+Studies can be run as shown for the first study once the setup has been completed:
+```
+python studies/first/reactor.py
+```
 
 ## Neutronics
 
-To use the axis-symmetric neutronics run you will need to download the required neutronics cross section data into the folder `eudemo/config/cross_section_data` or modify the build_config.json accordingly. Secondly you will need to provide a source, the default used in the `make_pps_source` function is not currently open source but should be available shortly.
+To run the neutronics analyses you will need to download the required neutronics cross section data into the folder studies/<study>/config/cross_section_data or modify the build_config.json accordingly. The neutronics source used is [tokamak-neutron-source](github.com/Fusion-Power-Plant-Framework/tokamak-neutron-source)
