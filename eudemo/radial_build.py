@@ -9,7 +9,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from bluemira.base.parameter_frame.typed import ParameterFrameT
 from bluemira.codes import systems_code_solver
 from bluemira.codes.process.api import Impurities
 from bluemira.codes.process.equation_variable_mapping import Constraint, Objective
@@ -46,7 +45,7 @@ from bluemira.codes.process.model_mapping import (
 from bluemira.codes.process.template_builder import PROCESSTemplateBuilder
 
 if TYPE_CHECKING:
-    from bluemira.base.parameter_frame import ParameterFrame
+    from bluemira.base.parameter_frame.typed import ParameterFrameT
 
 template_builder = PROCESSTemplateBuilder()
 template_builder.set_optimisation_algorithm(PROCESSOptimisationAlgorithm.VMCON)
