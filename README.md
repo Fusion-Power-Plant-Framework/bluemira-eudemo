@@ -3,9 +3,9 @@
 To set up your bluemira environment run the following
 
 ```bash
-bash scripts/install_bluemira.sh -i -t develop
+bash scripts/install_bluemira.sh -i -t develop -p 3.12
 ```
-If you have already have a conda installation you can remove `-i` and the conda step will be skipped.
+If you have already have a conda installation you can remove `-i` and the conda step will be skipped. `-p` specifies the python version which defaults to 3.12
 
 ```bash
 source ~/.miniforge-init.sh
