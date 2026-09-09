@@ -347,7 +347,7 @@ imgui.ini
 report.html
 .hatch
 */_version.py
-bluemira
+bluemira/
 .vscode/
 _version.py
 results_*

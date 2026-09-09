@@ -29,7 +29,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from bluemira.base.components import Component
 from bluemira.base.designer import run_designer
-from bluemira.base.file import get_bluemira_path, make_bluemira_path
 from bluemira.base.logs import set_log_level
 from bluemira.base.look_and_feel import bluemira_error, bluemira_print
 from bluemira.base.parameter_frame.typed import ParameterFrameLike
@@ -104,8 +103,10 @@ from eudemo.radial_build import radial_build
 from eudemo.tf_coils import TFCoil, TFCoilBuilder, TFCoilDesigner
 from eudemo.vacuum_vessel import VacuumVessel, VacuumVesselBuilder
 
-CONFIG_DIR = Path(__file__).parent / "config"
+STUDY = Path(__file__).parent
+CONFIG_DIR = STUDY / "config"
 BUILD_CONFIG_FILE_PATH = Path(CONFIG_DIR, "build_config.json").as_posix()
+VERSION = 5
 
 
 class EUDEMO(Reactor):
@@ -570,22 +571,23 @@ def add_useful_parameters(reactor, reactor_config, reference_eq):
     reactor_config.global_params.TF_peak_ripple.set_value(peak_ripple_hifi, "BLUEMIRA")
 
 
-def save_reactor(reactor, reactor_config, folder_name):
+def save_reactor(reactor, reactor_config, folder_name) -> Path:
     """
     Save a reactor to a folder data-structure
     """
     bluemira_print(f"Saving reactor to {folder_name}")
-    config_folder = get_bluemira_path("config", subfolder="eudemo")
-    root = make_bluemira_path(folder_name, subfolder="eudemo")
-    process_folder = make_bluemira_path(f"{folder_name}/PROCESS", subfolder="eudemo")
-    cad_folder = make_bluemira_path(f"{folder_name}/CAD", subfolder="eudemo")
-    equilibria_folder = make_bluemira_path(
-        f"{folder_name}/equilibria", subfolder="eudemo"
-    )
-    tf_folder = make_bluemira_path(f"{folder_name}/TF_coil", subfolder="eudemo")
+
+    results = STUDY / folder_name
+    process_folder = results / "PROCESS"
+    cad_folder = results / "CAD"
+    equilibria_folder = results / "equilibria"
+    tf_folder = results / "TF_coil"
+
+    for folder in [results, process_folder, cad_folder, equilibria_folder, tf_folder]:
+        folder.mkdir(exist_ok=True, parents=True)
     # Copy across PROCESS outputs
     for fn in ["OUT.DAT", "MFILE.DAT"]:
-        shutil.copyfile(Path(config_folder, fn), Path(process_folder, fn))
+        shutil.copyfile(Path(CONFIG_DIR, fn), Path(process_folder, fn))
     # Save equilibria
     try:
         sof: Equilibrium = reactor.equilibria.get_state(reactor.equilibria.SOF).eq
@@ -622,19 +624,19 @@ def save_reactor(reactor, reactor_config, folder_name):
     # Save figures
     reactor.plot("xz", show=False)
     f = plt.gcf()
-    filename = f"{root}/BLUEMIRA_reactor_xz.pdf"
+    filename = results / "BLUEMIRA_reactor_xz.pdf"
     f.savefig(filename, dpi=600, format="pdf")
     reactor.plot("xy", show=False)
     f = plt.gcf()
-    filename = f"{root}/BLUEMIRA_reactor_xy.pdf"
+    filename = results / "BLUEMIRA_reactor_xy.pdf"
     f.savefig(filename, dpi=600, format="pdf")
 
-    filename = f"{root}/BLUEMIRA_OUT.json"
+    filename = results / "BLUEMIRA_OUT.json"
     json_writer(reactor_config.global_params.to_dict(use_last=True), filename, indent=2)
 
-    n_root = Path(root, "neutronics")
+    n_root = results / "neutronics"
     n_root.mkdir(parents=True, exist_ok=True)
-    config_neutronics = Path(config_folder, "neutronics")
+    config_neutronics = CONFIG_DIR / "neutronics"
     if config_neutronics.is_dir():
         shutil.copytree(config_neutronics, n_root, dirs_exist_ok=True)
 
@@ -664,6 +666,8 @@ def save_reactor(reactor, reactor_config, folder_name):
             ).as_posix()
 
             json_writer(openmc_res, Path(dag_root, "openmc_result.json"), indent=2)
+
+    return results
 
 
 if __name__ == "__main__":
@@ -950,12 +954,10 @@ if __name__ == "__main__":
         particles = n_config.get("particles", n_config["DAGMC"]["particles"])
         neutrons = f"{particles:.2g}".replace(".", "_").replace("+", "")
         a_string = f"{reactor_config.global_params.A.value:.3f}".replace(".", "_")
-        folder_name = f"results_v05/A_{a_string}_neut_{neutrons}"
-        Path(folder_name).mkdir(exist_ok=True, parents=True)
-        filename = f"{folder_name}/run_time.json"
-        with open(filename, "w") as f:
+        folder_name = f"results_v{VERSION:02}/A_{a_string}_neut_{neutrons}"
+        results = save_reactor(reactor, reactor_config, folder_name=folder_name)
+        with open(results / "run_time.json", "w") as f:
             json.dump(run_time_track, f, indent=2)
-        save_reactor(reactor, reactor_config, folder_name=folder_name)
         plt.close("all")
 
     except Exception as e:
