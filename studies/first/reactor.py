@@ -764,11 +764,12 @@ if __name__ == "__main__":
 
         zero_d_params = ZeroDNeutronicsModel(reactor_config.global_params).run()
         reactor_config.global_params.update_from_frame(zero_d_params)
-        if reactor_config.config_for("Neutronics", "CSG").get("enabled", False):
+        csg_conf = reactor_config.config_for("Neutronics", "CSG")
+        if csg_conf.get("enabled", False):
             neutronics_start = time.time()
             neutronics_csg = run_csg_neutronics(
                 reactor_config.params_for("Neutronics", "CSG").global_params,
-                reactor_config.config_for("Neutronics", "CSG"),
+                csg_conf,
                 blanket=reactor.blanket,
                 vacuum_vessel=reactor.vacuum_vessel,
                 ivc_shapes=ivc_shapes,
@@ -778,7 +779,7 @@ if __name__ == "__main__":
             neutronics_end = time.time()
             run_time_track["CSG neutronics"] = neutronics_end - neutronics_start
 
-            if reactor_config.config_for("Neutronics")["show_data"]:
+            if csg_conf.get("show_data", False):
                 reactor.neutronics.plot()
                 bluemira_print(f"{reactor.neutronics}")
         else:
