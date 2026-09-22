@@ -41,6 +41,8 @@ class WallPolySpline(PolySpline):
         defaults = self.optvar_cls().update_from_dict(copy.deepcopy(self._defaults))
         if isinstance(variables, dict):
             defaults.update_from_dict(variables)
+        else:
+            defaults = variables
         super().__init__(defaults)
 
         ib_radius = self.variables.x1.value
