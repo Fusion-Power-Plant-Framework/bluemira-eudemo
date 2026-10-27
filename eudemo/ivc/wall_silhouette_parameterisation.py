@@ -25,7 +25,7 @@ class WallPolySpline(PolySpline):
     based on the PolySpline parameterisation.
     """
 
-    _defaults: ClassVar = {
+    _defaults: ClassVar[dict[str, OptVarVarDictValueT]] = {
         "x1": {"value": 5.8},
         "x2": {"value": 12.1},
         "z2": {"value": 0},
@@ -39,9 +39,10 @@ class WallPolySpline(PolySpline):
     }
 
     def __init__(self, variables: PolySplineOptVariables | VarDictT | None = None):
-        defaults = self.optvar_cls().update_from_dict(copy.deepcopy(self._defaults))
+        defaults = self.optvar_cls()
+        defaults.adjust_variables(copy.deepcopy(self._defaults), strict_bounds=False)
         if isinstance(variables, dict):
-            defaults.update_from_dict(variables)
+            defaults.adjust_variables(variables, strict_bounds=False)
         elif variables is not None:
             defaults = variables
         super().__init__(defaults)
@@ -98,9 +99,10 @@ class WallPrincetonD(PrincetonD):
     }
 
     def __init__(self, variables: PrincetonDOptVariables | VarDictT | None = None):
-        defaults = copy.deepcopy(self._defaults)
+        defaults = self.optvar_cls()
+        defaults.adjust_variables(copy.deepcopy(self._defaults), strict_bounds=False)
         if isinstance(variables, dict):
-            defaults.update_from_dict(variables)
+            defaults.adjust_variables(variables, strict_bounds=False)
         elif variables is not None:
             defaults = variables
         super().__init__(defaults)
