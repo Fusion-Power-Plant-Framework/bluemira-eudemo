@@ -75,7 +75,7 @@ class TSUpperPortDuctBuilder(Builder):
         if self.params.tk_ts.value <= 0:
             raise ValueError("Port wall thickness must be > 0")
 
-        self.y_offset = self.params.tf_wp_depth.value + self.params.g_ts_tf.value
+        self.y_offset = 0.5 * self.params.tf_wp_depth.value + self.params.g_ts_tf.value
 
     def build(self) -> Component:
         """Build upper port
@@ -268,7 +268,7 @@ class VVUpperPortDuctBuilder(Builder):
             raise ValueError("Port wall thickness must be > 0")
 
         self.y_offset = (
-            self.params.tf_wp_depth.value
+            0.5 * self.params.tf_wp_depth.value
             + self.params.g_ts_tf.value
             + self.params.tk_ts.value
             + self.params.g_vv_ts.value
