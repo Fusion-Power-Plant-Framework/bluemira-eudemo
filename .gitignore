@@ -344,6 +344,19 @@ GitHub.sublime-settings
 .polyscope.ini
 imgui.ini
 
+# cad files
+*.stp
+*.bin
+*.gltf
+
+# images
+*.png
+
+# results and input data
+**/config/cross_section_data
+**/config/neutronics
+
+
 report.html
 .hatch
 */_version.py
