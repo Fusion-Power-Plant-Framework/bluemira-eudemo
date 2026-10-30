@@ -778,14 +778,14 @@ if __name__ == "__main__":
             )
             neutronics_end = time.time()
             run_time_track["CSG neutronics"] = neutronics_end - neutronics_start
-
-            if csg_conf.get("show_data", False):
-                reactor.neutronics.plot()
-                bluemira_print(f"{reactor.neutronics}")
         else:
             neutronics_csg = None
 
         reactor.neutronics = NeutronicsManager(zero_d_params, neutronics_csg)
+
+        if csg_conf.get("show_data", False):
+            reactor.neutronics.plot()
+            bluemira_print(f"{reactor.neutronics}")
 
         vv_thermal_shield = build_vacuum_vessel_thermal_shield(
             reactor_config.params_for("Thermal shield"),
