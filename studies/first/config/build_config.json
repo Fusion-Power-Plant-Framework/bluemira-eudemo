@@ -119,7 +119,6 @@
     "material": "SS316_LN_MAT"
   },
   "Neutronics": {
-    "enabled": false,
     "cross_section_xml": "$path_expand:./cross_section_data/cross_sections.xml",
     "max_lost_particles": 1e2,
     "photon_transport": true,
