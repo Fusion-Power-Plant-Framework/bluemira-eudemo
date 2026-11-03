@@ -10,7 +10,6 @@ EUDEMO model manager classes
 from __future__ import annotations
 
 from dataclasses import dataclass
-from pathlib import Path
 from typing import TYPE_CHECKING
 
 import matplotlib.pyplot as plt
@@ -24,7 +23,7 @@ if TYPE_CHECKING:
     from bluemira.base.parameter_frame._frame import ParameterFrame
     from bluemira.equilibria.run import Snapshot
 
-    from eudemo.eudemo.neutronics.run import CSGOutput, DAGMCOutput
+    from eudemo.neutronics.run import CSGOutput, DAGMCOutput
 
 
 class EquilibriumManager:
@@ -133,15 +132,15 @@ class NeutronicsManager:
 
     def plot(self):
         """Plot neutronics results"""
+        if self.csg is None or self.csg.results is None:
+            bluemira_warn("Nothing to plot")
+            return
         _f, ax = plt.subplots()
         ax.axis("off")
         ax.imshow(
             np.asarray(
                 Image.open(
-                    Path(__file__).parent.parent
-                    / "config"
-                    / "neutronics"
-                    / "csg"
+                    self.csg.results.statepoint_file.parent.parent
                     / "plot"
                     / "geometry.png"
                 )
@@ -159,7 +158,7 @@ class NeutronicsManager:
         :
             Tabulated results
         """
-        if hasattr(self.csg.results, "_tabulate"):
+        if self.csg is not None and hasattr(self.csg.results, "_tabulate"):
             return str(self.csg.results)
         raise NotImplementedError("Tabulate not available for volume calculation")
 
