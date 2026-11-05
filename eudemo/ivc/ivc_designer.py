@@ -94,7 +94,9 @@ def design_ivc(
     )
 
     div_boundary = divertor_face.boundary[0]
-    div_internal_boundary = boolean_cut(div_boundary, ivc_boundary)[0]
+    div_internal_boundary = min(
+        boolean_cut(div_boundary, ivc_boundary), key=lambda x: -x.length
+    )
 
     return IVCShapes(
         blanket_face=plasma_face,
