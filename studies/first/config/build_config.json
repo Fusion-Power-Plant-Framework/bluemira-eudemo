@@ -347,7 +347,7 @@
         "long_name": "Gap around the cryostat port plugs."
       },
       "n_plug_castellations": {
-        "value": 4,
+        "value": 3,
         "unit": "dimensionless",
         "source": "Input",
         "long_name": "Number of castellations in port plugs."

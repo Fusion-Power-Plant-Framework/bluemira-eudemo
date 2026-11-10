@@ -75,7 +75,7 @@ class TSUpperPortDuctBuilder(Builder):
         if self.params.tk_ts.value <= 0:
             raise ValueError("Port wall thickness must be > 0")
 
-        self.y_offset = self.params.tf_wp_depth.value + self.params.g_ts_tf.value
+        self.y_offset = 0.5 * self.params.tf_wp_depth.value + self.params.g_ts_tf.value
 
     def build(self) -> Component:
         """Build upper port
@@ -268,7 +268,7 @@ class VVUpperPortDuctBuilder(Builder):
             raise ValueError("Port wall thickness must be > 0")
 
         self.y_offset = (
-            self.params.tf_wp_depth.value
+            0.5 * self.params.tf_wp_depth.value
             + self.params.g_ts_tf.value
             + self.params.tk_ts.value
             + self.params.g_vv_ts.value
@@ -464,13 +464,16 @@ def make_upper_port_xy_face(
     the port koz is slightly trimmed to allow for square ends to the port
     """
     half_beta = np.pi / n_TF
+    sin_hb = np.sin(half_beta)
     cos_hb = np.cos(half_beta)
     tan_hb = np.tan(half_beta)
 
     y_tf_out = y_offset / cos_hb
     y_tf_in = y_tf_out + wall_side_tk / cos_hb
 
-    x1 = x_min
+    # shift port by the distance from the chord to the edge of the circle
+    half_chord = sin_hb * (x_min - y_tf_out)
+    x1 = max(cos_hb * x_min * half_chord, x_min)  # is it proveable that this >= x_min?
 
     # This is the correct way to retrieve the outer radius of the port, accounting
     # for the TF thickness
