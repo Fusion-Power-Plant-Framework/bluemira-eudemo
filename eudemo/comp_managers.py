@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import abc
 from collections.abc import Iterable
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from bluemira.base.components import Component, PhysicalComponent
 from bluemira.base.reactor import ComponentManager
@@ -32,7 +32,7 @@ if TYPE_CHECKING:
     from bluemira.geometry.wire import BluemiraWire
 
 
-class VacuumVesselThermalShield(ComponentManager):
+class VacuumVesselThermalShield(ComponentManager[Component]):
     """
     Wrapper around a VVTS component tree.
     """
@@ -45,16 +45,16 @@ class VacuumVesselThermalShield(ComponentManager):
         :
             A wire representing the VVTS poloidal silhouette.
         """
-        return (
-            self
-            .component()
-            .get_component("xz")
-            .get_component(VVTSBuilder.VVTS)
-            .shape.boundary[0]
-        )
+
+        return cast(
+            "PhysicalComponent",
+            cast("Component", self.component().get_component("xz")).get_component(
+                VVTSBuilder.VVTS
+            ),
+        ).shape.boundary[0]
 
 
-class CryostatThermalShield(ComponentManager):
+class CryostatThermalShield(ComponentManager[Component]):
     """
     Wrapper around a CryostatTS component tree.
     """
@@ -67,13 +67,12 @@ class CryostatThermalShield(ComponentManager):
         :
             A wire representing the VVTS poloidal silhouette.
         """
-        return (
-            self
-            .component()
-            .get_component("xz")
-            .get_component(CryostatTSBuilder.CRYO_TS)
-            .shape.boundary[0]
-        )
+        return cast(
+            "PhysicalComponent",
+            cast("Component", self.component().get_component("xz")).get_component(
+                CryostatTSBuilder.CRYO_TS
+            ),
+        ).shape.boundary[0]
 
 
 class OrphanerMixin:
@@ -197,7 +196,7 @@ class PortManagerMixin(OrphanerMixin, abc.ABC):
         """Add ports to Component"""
 
 
-class ThermalShield(PortManagerMixin, ComponentManager):
+class ThermalShield(PortManagerMixin, ComponentManager[Component]):
     """
     Wrapper around a Thermal Shield component tree.
     """
@@ -350,7 +349,7 @@ class ThermalShield(PortManagerMixin, ComponentManager):
         )
 
 
-class Cryostat(PlugManagerMixin, ComponentManager):
+class Cryostat(PlugManagerMixin, ComponentManager[Component]):
     """
     Wrapper around a Cryostat component tree.
     """
@@ -380,7 +379,7 @@ class Cryostat(PlugManagerMixin, ComponentManager):
         )
 
 
-class RadiationShield(PlugManagerMixin, ComponentManager):
+class RadiationShield(PlugManagerMixin, ComponentManager[Component]):
     """
     Wrapper around a RadiationShield component tree.
     """
