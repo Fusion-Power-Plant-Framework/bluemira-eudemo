@@ -10,7 +10,12 @@ Wall Silhouette Parameterisations
 import copy
 from typing import ClassVar
 
-from bluemira.geometry.parameterisations import PolySpline, PrincetonD
+from bluemira.geometry.parameterisations import (
+    PolySpline,
+    PolySplineOptVariables,
+    PrincetonD,
+    PrincetonDOptVariables,
+)
 from bluemira.utilities.opt_variables import OptVarVarDictValueT, VarDictT
 
 
@@ -20,7 +25,7 @@ class WallPolySpline(PolySpline):
     based on the PolySpline parameterisation.
     """
 
-    _defaults: ClassVar = {
+    _defaults: ClassVar[dict[str, OptVarVarDictValueT]] = {
         "x1": {"value": 5.8},
         "x2": {"value": 12.1},
         "z2": {"value": 0},
@@ -33,10 +38,13 @@ class WallPolySpline(PolySpline):
         "bottom": {"value": 0.2},
     }
 
-    def __init__(self, var_dict: VarDictT | None = None):
-        defaults = copy.deepcopy(self._defaults)
-        if var_dict:
-            defaults.update(var_dict)
+    def __init__(self, variables: PolySplineOptVariables | VarDictT | None = None):
+        defaults = self.optvar_cls()
+        defaults.adjust_variables(copy.deepcopy(self._defaults), strict_bounds=False)
+        if isinstance(variables, dict):
+            defaults.adjust_variables(variables, strict_bounds=False)
+        elif variables is not None:
+            defaults = variables
         super().__init__(defaults)
 
         ib_radius = self.variables.x1.value
@@ -90,10 +98,13 @@ class WallPrincetonD(PrincetonD):
         "dz": {"value": -0.5},
     }
 
-    def __init__(self, var_dict: VarDictT | None = None):
-        defaults = copy.deepcopy(self._defaults)
-        if var_dict:
-            defaults.update(var_dict)
+    def __init__(self, variables: PrincetonDOptVariables | VarDictT | None = None):
+        defaults = self.optvar_cls()
+        defaults.adjust_variables(copy.deepcopy(self._defaults), strict_bounds=False)
+        if isinstance(variables, dict):
+            defaults.adjust_variables(variables, strict_bounds=False)
+        elif variables is not None:
+            defaults = variables
         super().__init__(defaults)
 
         ib_radius = self.variables.x1.value
